@@ -28,3 +28,4 @@ vendor/
 
 # binaries
 ssdc-rm-eq-launcher
+.DS_Store
