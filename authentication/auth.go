@@ -11,9 +11,9 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/ONSdigital/eq-questionnaire-launcher/clients"
-	"github.com/ONSdigital/eq-questionnaire-launcher/settings"
-	"github.com/ONSdigital/eq-questionnaire-launcher/surveys"
+	"github.com/ONSdigital/ssdc-rm-eq-launcher/clients"
+	"github.com/ONSdigital/ssdc-rm-eq-launcher/settings"
+	"github.com/ONSdigital/ssdc-rm-eq-launcher/surveys"
 	"github.com/gofrs/uuid"
 	"gopkg.in/square/go-jose.v2"
 	"gopkg.in/square/go-jose.v2/json"

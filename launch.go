@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"github.com/ONSdigital/ssdc-rm-eq-launcher/settings"
 	"io/ioutil"
 	"strings"
 
@@ -61,7 +62,9 @@ func handleUac(w http.ResponseWriter, r *http.Request, uac string) {
 	md := hash.Sum(nil)
 	mdStr := hex.EncodeToString(md)
 
-	response, err := http.Get("http://localhost:8161/uacs/" + mdStr)
+	caseAPIURL := settings.Get("CASE_API_URL")
+
+	response, err := http.Get(caseAPIURL + "/uacs/" + mdStr)
 	if err != nil || response.StatusCode == 404 {
 		http.Redirect(w, r, "baduac.html", 302)
 	}
@@ -82,10 +85,7 @@ func handleUac(w http.ResponseWriter, r *http.Request, uac string) {
 }
 
 func launchEq(w http.ResponseWriter, r *http.Request, collectionInstrumentUrl string, qid string) {
-	//hostURL := settings.Get("SURVEY_RUNNER_URL")
-	hostURL := "https://test-runner.eq.gcp.onsdigital.uk"
-	//hostURL := "https://social-runner.eq.gcp.onsdigital.uk"
-	//hostURL := "https://staging-runner.eq.gcp.onsdigital.uk"
+	hostURL := settings.Get("SURVEY_RUNNER_URL")
 	accountServiceURL := getAccountServiceURL(r)
 	AccountServiceLogOutURL := getAccountServiceURL(r)
 	urlValues := r.URL.Query()

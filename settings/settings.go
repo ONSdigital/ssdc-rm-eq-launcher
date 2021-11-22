@@ -22,6 +22,7 @@ func init() {
 	setSetting("SURVEY_REGISTER_URL", "")
 	setSetting("JWT_ENCRYPTION_KEY_PATH", "jwt-test-keys/sdc-user-authentication-encryption-sr-public-key.pem")
 	setSetting("JWT_SIGNING_KEY_PATH", "jwt-test-keys/sdc-user-authentication-signing-launcher-private-key.pem")
+	setSetting("CASE_API_URL", "http://localhost:8161")
 }
 
 // Get returns the value for the specified named setting
