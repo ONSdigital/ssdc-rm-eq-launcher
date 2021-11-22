@@ -16,25 +16,10 @@ go run launch.go (Does both the build and run cmd above)
 Open http://localhost:8000/
 
 ### Docker
-The dockerfile is a multistage dockerfile which can be built using:
+Build image using this command: `docker build -t ssdc-rm-eq-launcher:latest .`
 
-```
-docker build -t ssdc-rm-eq-launcher:latest .
-```
+Then run using this command: `docker run -e SURVEY_RUNNER_URL=https://test-runner.eq.gcp.onsdigital.uk -e CASE_API_URL=http://host.docker.internal:8161 -it -p 8000:8000 ssdc-rm-eq-launcher:latest`
 
-You can then run the image using `SURVEY_RUNNER_SCHEMA_URL` to point it at an instance of survey runner.
-
-```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://localhost:5000 -it -p 8000:8000 onsdigital/ssdc-rm-eq-launcher:latest
-```
-
-The syntax for this will be slightly different on Mac
-
-```
-docker run -e SURVEY_RUNNER_SCHEMA_URL=http://host.docker.internal:5000 -it -p 8000:8000 onsdigital/ssdc-rm-eq-launcher:latest
-```
-
-You should then be able to access go launcher at `localhost:8000`
 
 ### Run
 
