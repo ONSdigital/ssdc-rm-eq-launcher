@@ -36,21 +36,11 @@ docker run -e SURVEY_RUNNER_SCHEMA_URL=http://host.docker.internal:5000 -it -p 8
 
 You should then be able to access go launcher at `localhost:8000`
 
-### Run Quick-Launch
-If the schema specifies a `schema_name` field, that will be used as the schema_name claim. If not, the filename from the URL (before `.`) will be used.
+### Run
 
-Run Questionnaire Launcher
-```
-scripts/run_app.sh
-```
-Now run Go launcher and navigate to "http://localhost:8000/quick-launch?url=" passing the url of the JSON
-```
-e.g."http://localhost:8000/quick-launch?url=http://localhost:7777/1_0001.json"
-```
+First, start the launcher running like this: `SURVEY_RUNNER_URL=https://test-runner.eq.gcp.onsdigital.uk CASE_API_URL=http://localhost:8161 ./ssdc-rm-eq-launcher`
 
-### Notes
-* There are no unit tests yet
-* JWT spec based on http://ons-schema-definitions.readthedocs.io/en/latest/jwt_profile.html
+Now navigate to http://localhost:8000/
 
 ### Settings
 Environment Variable | Meaning | Default
