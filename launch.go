@@ -51,7 +51,7 @@ func checkUac(w http.ResponseWriter, r *http.Request) {
 
 func launchRequest(w http.ResponseWriter, r *http.Request) {
 	urlValues := r.URL.Query()
-	uac := urlValues.Get("uac")
+	uac := strings.ToUpper(urlValues.Get("uac"))
 
 	handleUac(w, r, uac)
 }
