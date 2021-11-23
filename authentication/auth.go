@@ -388,63 +388,6 @@ func GenerateTokenFromDefaults(surveyURL string, accountServiceURL string, accou
 	return token, ""
 }
 
-// TransformSchemaParamsToName Returns a schema name from business schema parameters
-func TransformSchemaParamsToName(postValues url.Values) string {
-	if postValues.Get("schema_name") != "" {
-		return postValues["schema_name"][0]
-	}
-
-	eqId := postValues.Get("eq_id")
-	formType := postValues.Get("form_type")
-	schemaName := fmt.Sprintf("%s_%s", eqId, formType)
-
-	return schemaName
-}
-
-// GenerateTokenFromPost converts a set of POST values into a JWT
-func GenerateTokenFromPost(postValues url.Values) (string, string) {
-	log.Println("POST received: ", postValues)
-
-	schema := TransformSchemaParamsToName(postValues)
-
-	launcherSchema := surveys.FindSurveyByName(schema)
-
-	claims := generateClaims(postValues, launcherSchema)
-
-	jwtClaims := GenerateJwtClaims()
-	for key, v := range jwtClaims {
-		claims[key] = v
-	}
-
-	schemaClaims := getSchemaClaims(launcherSchema)
-	for key, v := range schemaClaims {
-		claims[key] = v
-	}
-
-	requiredMetadata, error := GetRequiredMetadata(launcherSchema)
-	if error != "" {
-		return "", fmt.Sprintf("GetRequiredMetadata failed err: %v", error)
-	}
-
-	for _, metadata := range requiredMetadata {
-		if metadata.Validator == "boolean" {
-			_, isset := claims[metadata.Name]
-			claims[metadata.Name] = isset
-		}
-	}
-
-	if launcherSchema.Name != "" && claims["schema_name"] == "" {
-		claims["schema_name"] = launcherSchema.Name
-	}
-
-	token, tokenError := generateTokenFromClaims(claims)
-	if tokenError != nil {
-		return token, fmt.Sprintf("GenerateTokenFromPost failed err: %v", tokenError)
-	}
-
-	return token, ""
-}
-
 // GetRequiredMetadata Gets the required metadata from a schema
 func GetRequiredMetadata(launcherSchema surveys.LauncherSchema) ([]Metadata, string) {
 	var url string
