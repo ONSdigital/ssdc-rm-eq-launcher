@@ -31,6 +31,7 @@ Now navigate to http://localhost:8000/
 Environment Variable | Meaning | Default
 ---------------------|---------|--------
 PORT|Host port to listen on|8000
+CASE_API_URL|URL of Case API to check UACs|http://localhost:8161
 SURVEY_RUNNER_URL|URL of Survey Runner to re-direct to when launching a survey|http://localhost:5000
 JWT_ENCRYPTION_KEY_PATH|Path to the JWT Encryption Key (PEM format)|jwt-test-keys/sdc-user-authentication-encryption-sr-public-key.pem
 JWT_SIGNING_KEY_PATH|Path to the JWT Signing Key (PEM format)|jwt-test-keys/sdc-user-authentication-signing-launcher-private-key.pem
