@@ -41,6 +41,7 @@ func getAccountServiceURL(r *http.Request) string {
 func checkUac(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
+		http.Error(w, err.Error(), 400)
 		return
 	}
 
@@ -67,15 +68,21 @@ func handleUac(w http.ResponseWriter, r *http.Request, uac string) {
 	response, err := http.Get(caseAPIURL + "/uacs/" + mdStr)
 	if err != nil || response.StatusCode == 404 {
 		http.Redirect(w, r, "baduac.html", 302)
+		return
 	}
 
 	responseData, err := ioutil.ReadAll(response.Body)
 	if err != nil {
+		http.Error(w, err.Error(), 400)
 		return
 	}
 
 	var uacResponse UacResponse
-	json.Unmarshal(responseData, &uacResponse)
+	err = json.Unmarshal(responseData, &uacResponse)
+	if err != nil {
+		http.Error(w, err.Error(), 400)
+		return
+	}
 
 	if uacResponse.Active {
 		launchEq(w, r, uacResponse.CollectionInstrumentUrl, uacResponse.Qid)
@@ -114,5 +121,12 @@ func main() {
 	http.HandleFunc("/launch", launchRequest)
 	http.Handle("/", http.FileServer(http.Dir("./static")))
 
-	http.ListenAndServe(":8000", nil)
+	port := settings.Get("PORT")
+
+	fmt.Println("Started listening on port: " + port)
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		fmt.Println("Error starting HTTP server listening: " + err.Error())
+		return
+	}
 }

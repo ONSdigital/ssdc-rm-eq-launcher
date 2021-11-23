@@ -30,8 +30,7 @@ Now navigate to http://localhost:8000/
 ### Settings
 Environment Variable | Meaning | Default
 ---------------------|---------|--------
-GO_LAUNCH_A_SURVEY_LISTEN_HOST|Host address  to listen on|0.0.0.0
-GO_LAUNCH_A_SURVEY_LISTEN_PORT|Host port to listen on|8000
+PORT|Host port to listen on|8000
 SURVEY_RUNNER_URL|URL of Survey Runner to re-direct to when launching a survey|http://localhost:5000
 SURVEY_REGISTER_URL|URL of eq-survey-register to load schema list from |http://localhost:8080
 JWT_ENCRYPTION_KEY_PATH|Path to the JWT Encryption Key (PEM format)|jwt-test-keys/sdc-user-authentication-encryption-sr-public-key.pem
